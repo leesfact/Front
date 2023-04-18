@@ -1,5 +1,5 @@
 
-[![Typing SVG](https://readme-typing-svg.demolab.com?font=Noto+Sans+KR&weight=500&size=18&duration=2000&pause=1000&color=CD5C5C&multiline=true&width=435&lines=Book+Management+;Login+%26+DB+%EC%97%B0%EB%8F%99)](https://git.io/typing-svg)
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Noto+Sans+KR&weight=500&size=18&pause=1000&color=CD5C5C&multiline=true&width=435&lines=Book+Management+Front;Login+%ED%8E%98%EC%9D%B4%EC%A7%80)](https://git.io/typing-svg)
 
 <div>
   <img src="https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=Spring&logoColor=white">
