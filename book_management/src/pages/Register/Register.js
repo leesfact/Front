@@ -82,18 +82,25 @@ const register = css`
     font-weight: 600;
 `;
 
+const errorMsg = css`
+    margin-left: 5px;
+    margin-bottom: 20px;
+    font-size: 12px;
+    color:red;
+`;
 
 
 const Register = () => {
 
-    const [registerUser, setRegisterUser]  = useState( { email:"",password:"",name:"" } )
+    const [registerUser, setRegisterUser]  = useState( { email:"",password:"",name:"" } );
+    const [errorMessages, setErrorMessages]  = useState( { email: "", password: "" , name: "" } );
    
     const onChangeHandle = (e) => {
         const { name, value } = e.target;
         setRegisterUser( { ...registerUser, [name]:value } );
     }
 
-    const registeSubmit = () => {
+    const registeSubmit = async() => {
         const data = {
             ...registerUser
         }
@@ -104,18 +111,21 @@ const Register = () => {
             }
         }
 
-        axios
-        .post("http://localhost:8080/auth/signup", JSON.stringify(data), option)
-        .then( response => {
-            console.log("성공");
-            console.log(response);
-        })
-        .catch(error => {
-            console.log("에러");
-            console.log(error.response.data.errorData);
-        });
-
-        console.log("비동기 테스트");
+        try{
+            const response = await axios.post("http://localhost:8080/auth/signup", JSON.stringify(data), option);
+            setErrorMessages({email: "", password: "" , name: ""}); //빈값 ( 로그인 성공 시, error 메시지 뜨지않음 )
+            
+        }catch(error){
+            setErrorMessages({email: "", password: "" , name: "",...error.response.data.errorData}); //객체 (error.response.data.errorData)
+        }
+        
+        // .then( response => {
+        //     setErrorMessages({email: "", password: "" , name: ""}); //빈값 ( 로그인 성공 시, error 메시지 뜨지않음 )
+        //     console.log(response);
+        // })
+        // .catch(error => {
+        //     setErrorMessages({email: "", password: "" , name: "",...error.response.data.errorData}); //객체 (error.response.data.errorData)
+        // });
     }
 
 
@@ -130,14 +140,20 @@ const Register = () => {
                     <LoginInput type="email" placeholder="Type your email" onChange={onChangeHandle} name="email">
                         <FiUser />
                     </LoginInput>
+                    <div css={errorMsg}>{errorMessages.email}</div>
+
                     <label css={ inputLabel }>Password</label>
                     <LoginInput type="password" placeholder="Type your password" onChange={onChangeHandle} name="password">
                         <FiLock />
                     </LoginInput>
+                    <div css={errorMsg}>{errorMessages.password}</div>
+
                     <label css={ inputLabel }>Name</label>
                     <LoginInput type="text" placeholder="Type your name" onChange={onChangeHandle} name ="name">
                         <BiRename />
                     </LoginInput>
+                    <div css={errorMsg}>{errorMessages.name}</div>
+
                     <button css={ loginButton } onClick={registeSubmit}>REGISTER</button>
                 </div>
 

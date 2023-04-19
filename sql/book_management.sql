@@ -53,7 +53,7 @@ CREATE TABLE `authority_tb` (
   `user_id` int NOT NULL,
   `role_id` int NOT NULL,
   PRIMARY KEY (`authority_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -62,6 +62,7 @@ CREATE TABLE `authority_tb` (
 
 LOCK TABLES `authority_tb` WRITE;
 /*!40000 ALTER TABLE `authority_tb` DISABLE KEYS */;
+INSERT INTO `authority_tb` VALUES (1,1,1);
 /*!40000 ALTER TABLE `authority_tb` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -228,12 +229,10 @@ CREATE TABLE `user_tb` (
   `email` varchar(45) NOT NULL,
   `password` varchar(100) NOT NULL,
   `name` varchar(45) NOT NULL,
-  `nickname` varchar(45) NOT NULL,
   `provider` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`user_id`),
-  UNIQUE KEY `email_UNIQUE` (`email`),
-  UNIQUE KEY `nickname_UNIQUE` (`nickname`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  UNIQUE KEY `email_UNIQUE` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -242,6 +241,7 @@ CREATE TABLE `user_tb` (
 
 LOCK TABLES `user_tb` WRITE;
 /*!40000 ALTER TABLE `user_tb` DISABLE KEYS */;
+INSERT INTO `user_tb` VALUES (1,'aaa@gmail.com','1234','이강용',NULL);
 /*!40000 ALTER TABLE `user_tb` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -262,4 +262,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-04-17 17:36:29
+-- Dump completed on 2023-04-19 17:36:35
