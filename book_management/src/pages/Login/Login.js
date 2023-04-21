@@ -8,8 +8,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { BsGoogle } from 'react-icons/bs';
 import { SiNaver,SiKakao } from 'react-icons/si';
 import axios from 'axios';
+import { refreshState } from '../../atoms/Auth/AuthAtoms'; 
 import { useRecoilState } from 'recoil';
-import { authenticated } from '../../index';
 
 
 const container = css`
@@ -127,9 +127,9 @@ const errorMsg = css`
 const Login = () => {
 
     const [loginUser, setLoginUser] = useState({ email:"",password:"" ,name: ""});
-    const [errorMessages, setErrorMessages]  = useState( { email: "", password: "" ,name: "" } );
-    const [ auth, setAuth] = useRecoilState(authenticated);
-    //useRecoilState가 authenticated에 저장됨
+    const [errorMessages, setErrorMessages] = useState( { email: "", password: "" ,name: "" } );
+    const [ refresh, setRefresh] = useRecoilState( refreshState );
+   
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -150,11 +150,11 @@ const Login = () => {
             setErrorMessages({email: "", password: "" ,  });
             const accessToken = response.data.grantType + " " + response.data.accessToken;
             localStorage.setItem("accessToken", accessToken);
-            setAuth(true);
+            console.log(refresh);
+            setRefresh(false);
             navigate("/");
 
         }catch(error){
-           
             setErrorMessages({email: "", password: "",  ...error.response.data.errorData});
         }
     }
