@@ -53,7 +53,7 @@ CREATE TABLE `authority_tb` (
   `user_id` int NOT NULL,
   `role_id` int NOT NULL,
   PRIMARY KEY (`authority_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -62,7 +62,7 @@ CREATE TABLE `authority_tb` (
 
 LOCK TABLES `authority_tb` WRITE;
 /*!40000 ALTER TABLE `authority_tb` DISABLE KEYS */;
-INSERT INTO `authority_tb` VALUES (1,1,1);
+INSERT INTO `authority_tb` VALUES (1,1,1),(2,2,1),(3,3,1),(4,4,1);
 /*!40000 ALTER TABLE `authority_tb` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -89,6 +89,31 @@ CREATE TABLE `book_img_tb` (
 LOCK TABLES `book_img_tb` WRITE;
 /*!40000 ALTER TABLE `book_img_tb` DISABLE KEYS */;
 /*!40000 ALTER TABLE `book_img_tb` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `book_like_tb`
+--
+
+DROP TABLE IF EXISTS `book_like_tb`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `book_like_tb` (
+  `book_like_id` int NOT NULL AUTO_INCREMENT,
+  `book_id` int NOT NULL,
+  `user_id` int NOT NULL,
+  PRIMARY KEY (`book_like_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `book_like_tb`
+--
+
+LOCK TABLES `book_like_tb` WRITE;
+/*!40000 ALTER TABLE `book_like_tb` DISABLE KEYS */;
+INSERT INTO `book_like_tb` VALUES (1,1,1),(2,1,2),(3,2,1);
+/*!40000 ALTER TABLE `book_like_tb` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -232,7 +257,7 @@ CREATE TABLE `user_tb` (
   `provider` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -241,7 +266,7 @@ CREATE TABLE `user_tb` (
 
 LOCK TABLES `user_tb` WRITE;
 /*!40000 ALTER TABLE `user_tb` DISABLE KEYS */;
-INSERT INTO `user_tb` VALUES (1,'aaa@gmail.com','1234','이강용',NULL);
+INSERT INTO `user_tb` VALUES (1,'aaa@gmail.com','1234','이강용',NULL),(2,'bbb@gmail.com','$2a$10$htn2FMIZHPYHoMDbGcdrwORFLFdVLo3fnfm83ijsHKZd4EPgkDzf2','김준일',NULL),(3,'ccc@gmail.com','$2a$10$faoo85Fh7xec9UGMVXri3OWVrXdb05HrhUxU6B9jJtkKbky1eGaZ.','아무개요',NULL),(4,'ddd@gmail.com','$2a$10$zIf85akLtv6J3v5vNL0kYuLfX715pT2LXa4XLC/SV7RmI4toxCBJK','홍길뚱',NULL);
 /*!40000 ALTER TABLE `user_tb` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -262,4 +287,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-04-19 17:36:35
+-- Dump completed on 2023-04-26 17:44:25

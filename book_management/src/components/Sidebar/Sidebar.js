@@ -109,7 +109,6 @@ const Sidebar = () => {
         {
             enabled: accessToken   // true 일때만 get 요청
         });
-        console.log(response);
         return response;
     });
 

@@ -6,6 +6,7 @@ import BookCard from '../../components/UI/BookCard/BookCard';
 import axios from 'axios';
 import { useQuery } from 'react-query';
 import { BsMenuDown } from 'react-icons/bs';
+import QueryString from 'qs';
 
 
 
@@ -108,7 +109,9 @@ const Main = () => {
         params: searchParam,
         headers: {
             Authorization: localStorage.getItem("accessToken")
-        }
+        },
+        paramsSerializer: params => QueryString.stringify(params,{arrayFormat:'repeat'})
+
     }
 
     const searchBooks = useQuery(["searchBooks"], async () => {
@@ -126,7 +129,7 @@ const Main = () => {
             setBooks([...books, ...response.data.bookList]);
             setSearchParam({...searchParam, page: searchParam.page + 1});
         },
-        enabled: refresh && searchParam.page < lastPage + 1        
+        enabled: refresh && (searchParam.page < lastPage + 1 || lastPage === 0)        
     });
 
     const categories = useQuery(["categories"], async () => {
@@ -149,24 +152,37 @@ const Main = () => {
     })
 
     const categoryClickHandle = (e) => {
-        if (e.target.classList.contains('my-checkbox') || e.target.classList.contains('my-label') ) {
+        if (e.target.tagName === "INPUT" || e.target.tagName === "LABEL") {
             return;
         }
     
         e.stopPropagation();
         setIsOpen(!isOpen);
-    }
+    };
 
 
     const categoryCheckHandle = (e) => {
         
         if(e.target.checked){
-            setSearchParam({...searchParam, categoryIds: [...searchParam.categoryIds, e.target.value]});
+            setSearchParam({...searchParam, page: 1, categoryIds: [...searchParam.categoryIds, e.target.value]});
         }else{
-            setSearchParam({...searchParam, categoryIds: [...searchParam.categoryIds.filter(id => id!== e.target.value)]});
+            setSearchParam({...searchParam, page: 1, categoryIds: [...searchParam.categoryIds.filter(id => id!== e.target.value)]});
         }
 
-        setSearchParam()
+        setBooks([]);
+        setRefresh(true);
+    }
+
+    const searchInputHandle = (e) => {
+        setSearchParam({...searchParam, searchValue: e.target.value});
+    }
+
+    const searchSubmitHandle = (e) => {
+        if(e.keyCode === 13){
+            setSearchParam({...searchParam, page: 1});
+            setBooks([]);
+            setRefresh(true);
+        }
     }
 
 
@@ -181,14 +197,14 @@ const Main = () => {
                         <div css={categoryGroup(isOpen)}>
                             {categories.data !== undefined
                             ? categories.data.data.map(category => 
-                                (<div key={category.categoryId}>
-                                    <input type="checkbox" onChange={categoryCheckHandle} class="my-checkbox" id={"ct-" + category.categoryId} value={category.categoryId} />
-                                    <label class="my-label" htmlFor={"ct-" + category.categoryId}>{category.categoryName}</label>
+                                (<div key={category.categoryId} className="my-class">
+                                    <input type="checkbox" onChange={categoryCheckHandle} id={"ct-" + category.categoryId} value={category.categoryId} />
+                                    <label htmlFor={"ct-" + category.categoryId}>{category.categoryName}</label>
                                 </div>))
                             :""}
                         </div>
                     </button>
-                    <input css={searchInput} type="search" />
+                    <input css={searchInput} type="search" onKeyUp={searchSubmitHandle} onChange={searchInputHandle} />
                 </div>
             </header>
             <main css ={main}>
